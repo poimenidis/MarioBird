@@ -1,13 +1,13 @@
 package android.example.com.mariobird;
 
-public class HighscoreClass {
+public class UserClass {
 
     private String name;
     private String id;
     private String image;
     private String score;
 
-    public HighscoreClass(String name, String id, String image, String score){
+    public UserClass(String name, String id, String image, String score){
         this.name = name;
         this.id = id;
         this.image = image;

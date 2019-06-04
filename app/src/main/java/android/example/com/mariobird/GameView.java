@@ -11,10 +11,21 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.facebook.CallbackManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -64,6 +75,11 @@ public class GameView extends View{
     boolean starAppear=true;
     boolean enemyMusCena = false;
     boolean alreadyEntried = true;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private CallbackManager mCallbackManager;
+    private FirebaseUser currentUser = mAuth.getCurrentUser();
+    private DatabaseHelper databaseHelper;
+
 
     public GameView(Context context){
         super(context);
@@ -74,6 +90,7 @@ public class GameView extends View{
                 invalidate();
             }
         };
+        databaseHelper = new DatabaseHelper(getContext());
 
         coinMedia = MediaPlayer.create(context, R.raw.coin);
         screamMedia = MediaPlayer.create(context, R.raw.scream);
@@ -341,23 +358,44 @@ public class GameView extends View{
 
             if(alreadyEntried) {
                 alreadyEntried = false;
+                if(currentUser!=null) {
+                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+                    rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                final String scorefire = snapshot.child("score").getValue(String.class);
+                                if(Integer.parseInt(scorefire)<score){
+                                    rootRef.child("score").setValue(String.valueOf(score));
+                                    databaseHelper.updateScore("1", String.valueOf(score));
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                else{
+                    Cursor data = databaseHelper.getData();
+                    data.moveToPosition(databaseHelper.getPositionUser("1"));
+                    String highscore = data.getString(3);
+                    if (score > Integer.parseInt(highscore)) {
+                        databaseHelper.updateScore("1", String.valueOf(score));
+                    }
+                    databaseHelper.close();
+                }
+
                 new java.util.Timer().schedule(
                         new java.util.TimerTask() {
                             @Override
                             public void run() {
-
-                                DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-                                Cursor data = databaseHelper.getData();
-                                data.moveToPosition(databaseHelper.getPositionUser("1"));
-                                String highscore = data.getString(3);
-                                if(score>Integer.parseInt(highscore)){
-                                    databaseHelper.updateScore("1",String.valueOf(score));
-                                }
-                                databaseHelper.close();
-                                finish();
-                            }
-                        },
-                        3000
+                            finish();
+                        }
+                    },
+                    3000
                 );
             }
         }

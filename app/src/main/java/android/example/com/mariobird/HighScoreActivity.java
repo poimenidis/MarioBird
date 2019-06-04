@@ -17,12 +17,12 @@ public class HighScoreActivity extends AppCompatActivity {
     private HighscoreAdapter customAdapter;
     private String[] d1 = {null};
     private SwipeRefreshLayout swip;
-    private HighscoreClass highscoreClass;
+    private UserClass highscoreClass;
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> ids = new ArrayList<>();
     private ArrayList<String> images = new ArrayList<>();
     private ArrayList<String> scores = new ArrayList<>();
-    private ArrayList<HighscoreClass> highscoreClasses = new ArrayList<>();
+    private ArrayList<UserClass> highscoreClasses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +56,27 @@ public class HighScoreActivity extends AppCompatActivity {
         customAdapter.clear();
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        Cursor data = databaseHelper.getData();
-        data.moveToPosition(databaseHelper.getPositionUser("1"));
-        String id = data.getString(0);
-        String name = data.getString(1);
-        String image = data.getString(2);
-        String highscore = data.getString(3);
-        databaseHelper.close();
+        if(databaseHelper.userExists("1")) {
+            Cursor data = databaseHelper.getData();
+            data.moveToPosition(databaseHelper.getPositionUser("1"));
+            String id = data.getString(0);
+            String name = data.getString(1);
+            String image = data.getString(2);
+            String highscore = data.getString(3);
+            databaseHelper.close();
 
-        highscoreClass = new HighscoreClass(name,id,image,highscore);
-        highscoreClasses.add(highscoreClass);
+            highscoreClass = new UserClass(name, id, image, highscore);
+            highscoreClasses.add(highscoreClass);
 
-        for(HighscoreClass h : highscoreClasses){
-            names.add(h.getName());
-            images.add(h.getImage());
-            ids.add(h.getId());
-            scores.add(h.getScore());
+            for (UserClass h : highscoreClasses) {
+                names.add(h.getName());
+                images.add(h.getImage());
+                ids.add(h.getId());
+                scores.add(h.getScore());
+            }
+
+            customAdapter.setDatas(ids, names, images, scores);
         }
-
-        customAdapter.setDatas(ids, names, images, scores);
 
 
     }
