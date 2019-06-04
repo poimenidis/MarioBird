@@ -3,4 +3,7 @@
     <string name="highscore">Highscore</string>
     <string name="player">Player</string>
     <string name="rank">Rank</string>
+
+    <string name="facebook_app_id">368227160488615</string>
+    <string name="fb_login_protocol_scheme">fb368227160488615</string>
 </resources>
