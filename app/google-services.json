@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "701008215927",
+    "firebase_url": "https://mariobird-de96b.firebaseio.com",
+    "project_id": "mariobird-de96b",
+    "storage_bucket": "mariobird-de96b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701008215927:android:8bd27cf9f8fc923f",
+        "android_client_info": {
+          "package_name": "android.example.com.mariobird"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701008215927-5357kmbp90gk7o3h0hei71g8ulo5ejph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.example.com.mariobird",
+            "certificate_hash": "22e73ba2333d9f43f2dd9340ad42293542400a2c"
+          }
+        },
+        {
+          "client_id": "701008215927-se4btiq965t25am2kf0bkoiincug8nop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAstnRBrhLCaDVqAqE9KBRBTp2FeJbE_sM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701008215927-se4btiq965t25am2kf0bkoiincug8nop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
