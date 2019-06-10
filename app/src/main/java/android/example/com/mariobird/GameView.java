@@ -363,10 +363,21 @@ public class GameView extends View{
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
                                 final String scorefire = snapshot.child("score").getValue(String.class);
-                                if(Integer.parseInt(scorefire)<score){
+                                assert scorefire != null;
+                                if(Integer.parseInt(scorefire)<score) {
                                     rootRef.child("score").setValue(String.valueOf(score));
-                                    databaseHelper.updateScore("1", String.valueOf(score));
                                 }
+
+                                if(databaseHelper.userExists("1")) {
+                                    Cursor data = databaseHelper.getData();
+                                    data.moveToPosition(databaseHelper.getPositionUser("1"));
+                                    String highscore = data.getString(3);
+                                    if (score > Integer.parseInt(highscore)) {
+                                        databaseHelper.updateScore("1", String.valueOf(score));
+                                    }
+                                    databaseHelper.close();
+                                }
+
                             }
                         }
 

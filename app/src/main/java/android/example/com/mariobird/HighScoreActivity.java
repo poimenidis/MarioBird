@@ -5,9 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,16 +22,10 @@ public class HighScoreActivity extends Activity {
 
     private ListView listView;
     private HighscoreAdapter customAdapter;
-    private String[] d1 = {null};
     private SwipeRefreshLayout swip;
     private UserClass user;
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<String> ids = new ArrayList<>();
-    private ArrayList<String> images = new ArrayList<>();
-    private ArrayList<String> scores = new ArrayList<>();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private ArrayList<UserClass> users;
-    private ProgressBar progressBar;
     private ValueEventListener valueEventListener;
 
 
@@ -43,8 +35,6 @@ public class HighScoreActivity extends Activity {
         setContentView(R.layout.activity_high_score);
 
         users = new ArrayList<>();
-
-        progressBar = findViewById(R.id.progressBar2);
 
         swip = (SwipeRefreshLayout) findViewById(R.id.swipe);
         swip.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary);
@@ -107,7 +97,7 @@ public class HighScoreActivity extends Activity {
     }
 
     public void retrieveUsers(){
-        progressBar.setVisibility(View.VISIBLE);
+        swip.setRefreshing(true);
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
         valueEventListener = ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -125,7 +115,6 @@ public class HighScoreActivity extends Activity {
                     }
                 });
                 Collections.reverse(users);
-                progressBar.setVisibility(View.GONE);
                 swip.setRefreshing(false);
             }
 
