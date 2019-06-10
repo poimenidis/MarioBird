@@ -21,7 +21,6 @@
             android:layout_height="match_parent">
 
 
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
@@ -85,6 +84,13 @@
                     android:textStyle="bold" />
 
             </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <ListView
                 android:id="@+id/highscore_list"

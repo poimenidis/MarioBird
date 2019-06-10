@@ -106,6 +106,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    public void updateImage(String id , String image){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + IMAGE +
+                " = '" + image + "' WHERE " + ID + " = '" + id + "'";
+        Log.d(TAG, "updateName: query: " + query);
+        Log.d(TAG, "updateName: Setting image to " + image);
+        db.execSQL(query);
+    }
+
+    public void updateName(String id , String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + NAME +
+                " = '" + name + "' WHERE " + ID + " = '" + id + "'";
+        Log.d(TAG, "updateName: query: " + query);
+        Log.d(TAG, "updateName: Setting image to " + name);
+        db.execSQL(query);
+    }
+
     public int getPositionUser(String id){
 
         Cursor data = getData();

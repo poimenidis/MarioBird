@@ -2,11 +2,16 @@ package android.example.com.mariobird;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -17,12 +22,9 @@ import java.util.List;
 public class HighscoreAdapter extends BaseAdapter {
 
     private final Activity context;
-    private List<String> id;
-    private List<String> images;
-    private List<String> rank;
-    private List<String> playerName;
-    private List<String> highscore;
+    private List<UserClass> users;
     private LayoutInflater inflater;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
     public HighscoreAdapter(Activity context) {
@@ -35,7 +37,7 @@ public class HighscoreAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return id.size();
+        return users.size();
     }
 
     @Override
@@ -61,19 +63,35 @@ public class HighscoreAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        holder.playerName.setText(playerName.get(position));
-        holder.highscore.setText(highscore.get(position));
+        holder.playerName.setText(users.get(position).getName());
+        holder.highscore.setText(users.get(position).getScore());
         holder.rank.setText(String.valueOf(position+1));
+        Uri uri = Uri.parse(users.get(position).getImage());
+        holder.profile.setImageURI(uri);
+
+        if(users.get(position).getId().equals(mAuth.getUid())){
+            holder.rank.setTextAppearance(context, R.style.boldText);
+            holder.playerName.setTextAppearance(context, R.style.boldText);
+            holder.highscore.setTextAppearance(context, R.style.boldText);
+            holder.rank.setTextColor(ContextCompat.getColor(context, R.color.antique_white));
+            holder.playerName.setTextColor(ContextCompat.getColor(context, R.color.antique_white));
+            holder.highscore.setTextColor(ContextCompat.getColor(context, R.color.antique_white));
+        }
+        else{
+            holder.rank.setTextAppearance(context, R.style.normalText);
+            holder.playerName.setTextAppearance(context, R.style.normalText);
+            holder.highscore.setTextAppearance(context, R.style.normalText);
+            holder.rank.setTextColor(ContextCompat.getColor(context, R.color.white));
+            holder.playerName.setTextColor(ContextCompat.getColor(context, R.color.white));
+            holder.highscore.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
 
         return view;
 
     };
 
-    public void setDatas(List<String> id, List<String> images, List<String> playerName, List<String> highscore) {
-        this.id = id;
-        this.playerName = playerName;
-        this.highscore = highscore;
-        this.images = images;
+    public void setDatas(List<UserClass> users) {
+        this.users = users;
         notifyDataSetChanged();
     }
 
@@ -81,39 +99,29 @@ public class HighscoreAdapter extends BaseAdapter {
         TextView playerName;
         TextView rank;
         TextView highscore;
+        SimpleDraweeView profile;
 
 
         public ViewHolder(View rowView) {
 
+            profile = rowView.findViewById(R.id.profile);
 
             rank = (TextView) rowView.findViewById(R.id.number);
 
             highscore = (TextView) rowView.findViewById(R.id.highscore);
 
             playerName = (TextView) rowView.findViewById(R.id.player_name);
+
         }
     }
 
     public void clear(){
-        playerName.clear();
-        highscore.clear();
+        users.clear();
         notifyDataSetChanged();
     }
 
 
-    public List<String> getPlayerName() {
-        return playerName;
-    }
-
-    public List<String> getRank() {
-        return rank;
-    }
-
-    public List<String> getHighscore() {
-        return highscore;
-    }
-
-    public List<String> getId() {
-        return id;
+    public List<UserClass> getUsers() {
+        return users;
     }
 }

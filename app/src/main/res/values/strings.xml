@@ -8,4 +8,8 @@
     <string name="fb_login_protocol_scheme">fb368227160488615</string>
     <string name="log_in">Log in</string>
     <string name="log_out">Log out</string>
+    <string name="no_internet_connection">No Internet connection…</string>
+    <string name="sure_log_out">Are you sure you want to log out?</string>
+    <string name="yes_option">yes</string>
+    <string name="no_option">no</string>
 </resources>

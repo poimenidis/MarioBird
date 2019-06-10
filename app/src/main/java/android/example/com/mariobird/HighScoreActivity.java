@@ -1,33 +1,50 @@
 package android.example.com.mariobird;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class HighScoreActivity extends AppCompatActivity {
+public class HighScoreActivity extends Activity {
 
     private ListView listView;
     private HighscoreAdapter customAdapter;
     private String[] d1 = {null};
     private SwipeRefreshLayout swip;
-    private UserClass highscoreClass;
+    private UserClass user;
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> ids = new ArrayList<>();
     private ArrayList<String> images = new ArrayList<>();
     private ArrayList<String> scores = new ArrayList<>();
-    private ArrayList<UserClass> highscoreClasses = new ArrayList<>();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private ArrayList<UserClass> users;
+    private ProgressBar progressBar;
+    private ValueEventListener valueEventListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
+
+        users = new ArrayList<>();
+
+        progressBar = findViewById(R.id.progressBar2);
 
         swip = (SwipeRefreshLayout) findViewById(R.id.swipe);
         swip.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary);
@@ -35,49 +52,95 @@ public class HighScoreActivity extends AppCompatActivity {
         swip.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Handler mh = new Handler();
-                mh.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (swip.isRefreshing()) {
-                            swip.setRefreshing(false);
+                if (mAuth.getUid() != null) {
+                    retrieveUsers();
+                    Handler mh = new Handler();
+                    mh.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (swip.isRefreshing()) {
+                                swip.setRefreshing(false);
+                            }
                         }
+                    }, 7000);
+                }
+                else {
+                    if (swip.isRefreshing()) {
+                        swip.setRefreshing(false);
                     }
-                }, 7000);
+                }
             }
 
         });
 
         listView = findViewById(R.id.highscore_list);
         customAdapter = new HighscoreAdapter(this);
-        List<String> data1 = new ArrayList<>(Arrays.asList(d1));
-        customAdapter.setDatas(data1, data1, data1, data1);
+        user = new UserClass();
+        users.add(user);
+        customAdapter.setDatas(users);
         listView.setAdapter(customAdapter);
         customAdapter.clear();
+        users.clear();
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        if(databaseHelper.userExists("1")) {
-            Cursor data = databaseHelper.getData();
-            data.moveToPosition(databaseHelper.getPositionUser("1"));
-            String id = data.getString(0);
-            String name = data.getString(1);
-            String image = data.getString(2);
-            String highscore = data.getString(3);
-            databaseHelper.close();
+        if(mAuth.getUid()==null) {
+            DatabaseHelper databaseHelper = new DatabaseHelper(this);
+            if (databaseHelper.userExists("1")) {
+                Cursor data = databaseHelper.getData();
+                data.moveToPosition(databaseHelper.getPositionUser("1"));
+                String id = data.getString(0);
+                String name = data.getString(1);
+                String image = data.getString(2);
+                String highscore = data.getString(3);
+                databaseHelper.close();
 
-            highscoreClass = new UserClass(name, id, image, highscore);
-            highscoreClasses.add(highscoreClass);
+                user = new UserClass(name, id, image, highscore);
+                users.add(user);
 
-            for (UserClass h : highscoreClasses) {
-                names.add(h.getName());
-                images.add(h.getImage());
-                ids.add(h.getId());
-                scores.add(h.getScore());
+                customAdapter.setDatas(users);
             }
-
-            customAdapter.setDatas(ids, names, images, scores);
+        }
+        else{
+            retrieveUsers();
         }
 
 
+    }
+
+    public void retrieveUsers(){
+        progressBar.setVisibility(View.VISIBLE);
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
+        valueEventListener = ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                users.clear();
+                for (DataSnapshot snap: dataSnapshot.getChildren()) {
+                    users.add(snap.getValue(UserClass.class));
+                }
+
+                customAdapter.setDatas(users);
+                Collections.sort(users, new Comparator<UserClass>() {
+                    @Override
+                    public int compare(UserClass o1, UserClass o2) {
+                        return (o1.getScore().compareTo(o2.getScore()));
+                    }
+                });
+                Collections.reverse(users);
+                progressBar.setVisibility(View.GONE);
+                swip.setRefreshing(false);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(valueEventListener!=null) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+            ref.removeEventListener(valueEventListener);
+        }
     }
 }

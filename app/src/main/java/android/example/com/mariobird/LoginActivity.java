@@ -1,6 +1,7 @@
 package android.example.com.mariobird;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -8,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -22,6 +22,7 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -41,7 +42,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
 
     private LoginButton loginButton;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -53,11 +54,14 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 100;
     private ProgressBar progressBar;
+    private SignInButton googleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        googleButton = findViewById(R.id.google_button);
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -190,6 +194,12 @@ public class LoginActivity extends AppCompatActivity {
                         else {
                             rootRef.child("score").setValue(highscore);
                         }
+
+                        final String userName = snapshot.child("name").getValue(String.class);
+                        final String image = snapshot.child("image").getValue(String.class);
+
+                        databaseHelper.updateImage("1", image);
+                        databaseHelper.updateName("1", userName);
                     }
                 }
 

@@ -14,6 +14,10 @@ public class UserClass {
         this.score = score;
     }
 
+    public UserClass(){
+
+    }
+
     public void setId(String id) {
         this.id = id;
     }

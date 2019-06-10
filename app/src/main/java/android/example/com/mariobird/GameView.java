@@ -354,8 +354,6 @@ public class GameView extends View{
                 canvas.drawBitmap(bottomTube, tubeX[i], tubeY[i] + gap, null);
             }
 
-            canvas.drawBitmap(gameover, null, rect, null);
-
             if(alreadyEntried) {
                 alreadyEntried = false;
                 if(currentUser!=null) {
@@ -398,6 +396,8 @@ public class GameView extends View{
                     3000
                 );
             }
+
+            canvas.drawBitmap(gameover, null, rect, null);
         }
 
         //draw all the characters
