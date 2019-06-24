@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,12 +29,17 @@ public class HighScoreActivity extends Activity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private ArrayList<UserClass> users;
     private ValueEventListener valueEventListener;
+    private AdView mAdView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         users = new ArrayList<>();
 

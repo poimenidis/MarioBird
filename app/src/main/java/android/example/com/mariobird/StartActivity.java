@@ -9,6 +9,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.google.android.gms.ads.MobileAds;
 
 public class StartActivity extends FragmentActivity {
 
@@ -16,6 +17,7 @@ public class StartActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
+        MobileAds.initialize(this, "ca-app-pub-8453977966536256~1200656674");
         setContentView(R.layout.activity_start);
 
         ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithResourceId(R.drawable.giphy).build();
