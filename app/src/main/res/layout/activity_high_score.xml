@@ -10,29 +10,33 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- TODO: Update blank fragment layout -->
 
         <LinearLayout
             android:id="@+id/LinearID"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="serif"
                 android:text="MarioBird Highscores"
-                android:textColor="@android:color/white"
                 android:textAlignment="center"
+                android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold|italic" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -49,7 +53,7 @@
                     android:text="@string/rank"
                     android:textColor="@android:color/white"
                     android:textSize="15dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/name"
@@ -61,19 +65,19 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="@string/player"
-                    android:textColor="@android:color/white"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="15dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/trelo_katataji"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
                     android:layout_gravity="right"
                     android:layout_marginEnd="11dp"
                     android:layout_marginRight="11dp"
@@ -88,27 +92,26 @@
             <ListView
                 android:id="@+id/highscore_list"
                 android:layout_width="match_parent"
-                android:layout_height="589dp"
+                android:layout_height="785dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:background="@color/floral_white"
-                ads:adSize="SMART_BANNER"
-                android:layout_gravity="bottom"
-                ads:adUnitId="ca-app-pub-8453977966536256/7142236732"
-                ads:layout_constraintBottom_toBottomOf="parent"
-                ads:layout_constraintEnd_toEndOf="parent"
-                ads:layout_constraintStart_toStartOf="parent" />
-
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:background="@color/red"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-8453977966536256/7142236732"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
