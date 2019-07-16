@@ -1,4 +1,4 @@
-package com.example.com.mariobird;
+package app.example.com.mariobird;
 
 import android.app.AlertDialog;
 import android.content.Context;

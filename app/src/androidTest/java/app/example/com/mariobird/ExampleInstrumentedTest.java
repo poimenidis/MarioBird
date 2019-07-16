@@ -1,4 +1,4 @@
-package com.example.com.mariobird;
+package app.example.com.mariobird;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:701008215927:android:8bd27cf9f8fc923f",
         "android_client_info": {
-          "package_name": "com.example.com.mariobird"
+          "package_name": "app.example.com.mariobird"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "701008215927-5357kmbp90gk7o3h0hei71g8ulo5ejph.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.com.mariobird",
+            "package_name": "app.example.com.mariobird",
             "certificate_hash": "22e73ba2333d9f43f2dd9340ad42293542400a2c"
           }
         },
