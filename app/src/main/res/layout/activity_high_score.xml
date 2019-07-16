@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.example.com.mariobird.HighScoreActivity"
+    tools:context="com.example.com.mariobird.HighScoreActivity"
     android:background="@drawable/background">
 
     <android.support.v4.widget.SwipeRefreshLayout

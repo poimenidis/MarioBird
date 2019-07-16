@@ -4,12 +4,12 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "android.example.com.mariobird"
+        applicationId "com.example.com.mariobird"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "app.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.example.com.mariobird">
+    package="com.example.com.mariobird">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name="app.example.com.mariobird.StartActivity"
+        <activity android:name="com.example.com.mariobird.StartActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="app.example.com.mariobird.LoginActivity"
+            android:name="com.example.com.mariobird.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 
@@ -46,15 +46,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="app.example.com.mariobird.HighScoreActivity"
+            android:name="com.example.com.mariobird.HighScoreActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.example.com.mariobird.StartGame"
+            android:name="com.example.com.mariobird.StartGame"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="app.example.com.mariobird.MainActivity"
+            android:name="com.example.com.mariobird.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>

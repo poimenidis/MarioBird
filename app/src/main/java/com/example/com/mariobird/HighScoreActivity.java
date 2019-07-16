@@ -1,4 +1,4 @@
-package app.example.com.mariobird;
+package com.example.com.mariobird;
 
 import android.app.Activity;
 import android.database.Cursor;
