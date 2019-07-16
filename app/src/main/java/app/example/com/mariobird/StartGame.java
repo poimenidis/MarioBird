@@ -1,4 +1,4 @@
-package android.example.com.mariobird;
+package app.example.com.mariobird;
 
 import android.app.Activity;
 import android.os.Bundle;

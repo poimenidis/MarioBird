@@ -1,4 +1,4 @@
-package android.example.com.mariobird;
+package app.example.com.mariobird;
 
 import org.junit.Test;
 

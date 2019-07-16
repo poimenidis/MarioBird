@@ -1,4 +1,4 @@
-package android.example.com.mariobird;
+package app.example.com.mariobird;
 
 public class UserClass {
 

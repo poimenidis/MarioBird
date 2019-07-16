@@ -1,4 +1,4 @@
-package android.example.com.mariobird;
+package app.example.com.mariobird;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -95,7 +95,7 @@ public class GameView extends View{
         coinMedia = MediaPlayer.create(context, R.raw.coin);
         screamMedia = MediaPlayer.create(context, R.raw.scream);
         slapMedia = MediaPlayer.create(context, R.raw.slap);
-        starMedia = MediaPlayer.create(this.getContext(), R.raw.sexy);
+        starMedia = MediaPlayer.create(this.getContext(), R.raw.star);
         biteMedia = MediaPlayer.create(this.getContext(), R.raw.bite);
         enemyMusMedia =  MediaPlayer.create(this.getContext(), R.raw.laugh);
         wing =  MediaPlayer.create(this.getContext(), R.raw.wing);
